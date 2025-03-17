@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品一覧 - ECサイト</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <h1>商品一覧</h1>
+    <div id="product-list"></div>
+
+    <script src="assets/api.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const products = await fetchProducts();
+            const productList = document.getElementById("product-list");
+
+            products.forEach(product => {
+                const div = document.createElement("div");
+                div.innerHTML = `<a href="product.html?id=${product.id}">${product.name} - ¥${product.price}</a>`;
+                productList.appendChild(div);
+            });
+        });
+    </script>
+</body>
+</html>
