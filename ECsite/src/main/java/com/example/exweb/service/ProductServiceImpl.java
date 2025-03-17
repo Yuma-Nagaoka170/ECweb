@@ -25,6 +25,11 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("商品が見つかりません"));
 	}
+	
+	@Override
+    public void saveProduct(Product product) {
+        productRepository.save(product);  // 商品をデータベースに保存
+    }
 
 }
  

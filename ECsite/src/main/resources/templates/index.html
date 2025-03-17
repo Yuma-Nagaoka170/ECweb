@@ -3,25 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>商品一覧 - ECサイト</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <title>ECサイト</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>商品一覧</h1>
-    <div id="product-list"></div>
+    <h1>ECサイト</h1>
 
-    <script src="assets/api.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            const products = await fetchProducts();
-            const productList = document.getElementById("product-list");
+    <!-- ログインフォーム -->
+    <div id="login-container">
+        <h2>ログイン</h2>
+        <form id="login-form">
+            <label for="email">メールアドレス:</label>
+            <input type="email" id="email" required>
+            <label for="password">パスワード:</label>
+            <input type="password" id="password" required>
+            <button type="submit">ログイン</button>
+        </form>
+    </div>
 
-            products.forEach(product => {
-                const div = document.createElement("div");
-                div.innerHTML = `<a href="product.html?id=${product.id}">${product.name} - ¥${product.price}</a>`;
-                productList.appendChild(div);
-            });
-        });
-    </script>
+    <!-- 商品一覧 -->
+    <div id="products-container">
+        <h2>商品一覧</h2>
+		<ul id="product-list">
+		        <li th:each="product : ${products}">
+		            <h3 th:text="${product.name}">商品名</h3>
+		            <p th:text="${product.description}">商品説明</p>
+		            <p th:text="${product.price}">価格</p>
+		            <!-- 画像を表示 -->
+		            <img th:src="@{/images/{imageName}(imageName=${product.imageUrl})}" alt="商品画像">
+		        </li>
+		    </ul>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

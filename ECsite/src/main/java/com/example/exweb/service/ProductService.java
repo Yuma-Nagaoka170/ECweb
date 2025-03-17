@@ -7,5 +7,6 @@ import com.example.exweb.model.Product;
 public interface ProductService {
 	List<Product> getAllProducts();
 	Product getProductById(long id);
+	void saveProduct (Product product);
 
 }
