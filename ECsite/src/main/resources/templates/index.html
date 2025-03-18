@@ -3,38 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECサイト</title>
-    <link rel="stylesheet" href="style.css">
+    <title>商品一覧ページ</title>
+	<link rel="stylesheet" th:href="@{/static/style.css}">
 </head>
 <body>
-    <h1>ECサイト</h1>
 
-    <!-- ログインフォーム -->
-    <div id="login-container">
-        <h2>ログイン</h2>
-        <form id="login-form">
-            <label for="email">メールアドレス:</label>
-            <input type="email" id="email" required>
-            <label for="password">パスワード:</label>
-            <input type="password" id="password" required>
-            <button type="submit">ログイン</button>
-        </form>
+    <!-- ナビゲーションバー -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">🔥 EC Shop</a>
+            <ul class="menu">
+                <li><a href="#">🏠 ホーム</a></li>
+                <li><a href="#">🛍 商品一覧</a></li>
+                <li><a href="#">📞 お問い合わせ</a></li>
+                <li><a href="#">📦 注文履歴</a></li>
+            </ul>
+            <a href="#" class="login-btn">🔑 ログイン</a>
+        </div>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <div class="container">
+        <h1>商品一覧</h1>
+
+        <!-- 商品一覧 -->
+        <section id="products-container">
+            <ul id="product-list">
+                <!-- 商品カード -->
+                <li class="product-card">
+                    <img src="images/image1.jpg" alt="Tシャツ" class="product-img">
+                    <h3>Tシャツ</h3>
+                    <p>シンプルな白いTシャツ</p>
+                    <p class="price">￥2,500</p>
+                    <button class="buy-btn">🛒 購入する</button>
+                </li>
+                <li class="product-card">
+                    <img src="images/image2.png" alt="スニーカー" class="product-img">
+                    <h3>スニーカー</h3>
+                    <p>快適な履き心地のスニーカー</p>
+                    <p class="price">￥8,000</p>
+                    <button class="buy-btn">🛒 購入する</button>
+                </li>
+                <li class="product-card">
+                    <img src="images/image3.png" alt="リュック" class="product-img">
+                    <h3>リュック</h3>
+                    <p>通勤・通学に最適なリュック</p>
+                    <p class="price">￥4,500</p>
+                    <button class="buy-btn">🛒 購入する</button>
+                </li>
+            </ul>
+        </section>
+
     </div>
 
-    <!-- 商品一覧 -->
-    <div id="products-container">
-        <h2>商品一覧</h2>
-		<ul id="product-list">
-		        <li th:each="product : ${products}">
-		            <h3 th:text="${product.name}">商品名</h3>
-		            <p th:text="${product.description}">商品説明</p>
-		            <p th:text="${product.price}">価格</p>
-		            <!-- 画像を表示 -->
-		            <img th:src="@{/images/{imageName}(imageName=${product.imageUrl})}" alt="商品画像">
-		        </li>
-		    </ul>
-    </div>
+    <!-- フッター -->
+    <footer class="footer">
+        &copy; 2025 EC Shop All rights reserved.
+    </footer>
 
-    <script src="script.js"></script>
 </body>
 </html>

@@ -12,23 +12,22 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // BCryptPasswordEncoder を Bean として登録
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // HTTP セキュリティ設定
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/products", "/api/products/**").permitAll() // ホームページと商品ページは誰でもアクセス可能
+                .requestMatchers("/", "/products", "/static/**", "/images/**", "/login").permitAll() // ホームページ、商品ページ、静的リソース、ログインページは誰でもアクセス可能
+                .requestMatchers("/api/products/**").permitAll() // REST APIも許可
                 .anyRequest().authenticated() // その他のページは認証が必要
             )
             .formLogin(login -> login
                 .loginPage("/login") // ログインページの URL
-                .defaultSuccessUrl("/dashboard", true) // ログイン成功後にリダイレクトする URL
+                .defaultSuccessUrl("/products", true) // ログイン成功後にリダイレクトする URL
                 .permitAll() // ログインページは誰でもアクセス可能
             )
             .logout(logout -> logout

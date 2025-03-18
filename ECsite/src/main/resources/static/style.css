@@ -1,38 +1,101 @@
+/* 📌 全体リセット */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f5f5f5;
+    background-color: #f8f8f8;
 }
 
-h1, h2 {
-    color: #333;
-}
-
-#login-container, #products-container {
-    background: white;
-    padding: 20px;
-    margin: 20px auto;
-    width: 300px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-input, button {
-    margin: 10px 0;
-    padding: 10px;
-}
-
-button {
-    background: blue;
+/* 📌 ナビゲーションバー */
+.navbar {
+    background-color: #d32f2f;
     color: white;
-    border: none;
-    cursor: pointer;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-button:hover {
-    background: darkblue;
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+}
+
+.menu {
+    display: flex;
+    list-style-type: none;
+}
+
+.menu li {
+    margin-left: 20px;
+}
+
+.menu li a {
+    text-decoration: none;
+    color: white;
+}
+
+.login-btn {
+    background-color: #ffeb3b;
+    color: #d32f2f;
+    padding: 5px 10px;
+}
+
+/* 📌 メインコンテンツ */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+/* 📌 商品一覧 */
+#products-container {
+    margin-top: 30px;
+}
+
+#product-list {
+    display: flex; /* 横並びにする */
+    flex-wrap: wrap; /* 折り返しを許可 */
+    gap: 20px; /* カード間の余白 */
+}
+
+.product-card {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 20px); /* 横幅を調整して3列表示 */
+}
+
+.product-img {
+    width: 100%;
+    height: auto; /* アスペクト比を維持 */
+}
+
+.price {
+    font-size: 18px;
+}
+
+/* 📌 購入ボタン */
+.buy-btn {
+    background-color: #ff9800;
+}
+
+/* 📌 レスポンシブ対応 */
+@media (max-width: 768px) {
+   #product-list {
+       flex-direction: column; /* 小さい画面では縦並びにする */
+   }
+
+   .product-card {
+       width: calc(100% - 20px); /* 幅を100%に変更 */
+   }
 }
