@@ -2,14 +2,15 @@ package com.example.exweb.controller;
 
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.exweb.model.Product;
 import com.example.exweb.service.ProductService;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class HomeController {
 	private final ProductService productService;
 	
@@ -18,10 +19,8 @@ public class HomeController {
 	}
 	
 	@GetMapping("/")
-	public String home(Model model) {
-		List<Product> products = productService.getAllProducts();
-		model.addAttribute("products", products);
-		return "index";
+	 public List<Product> getAllProducts() {
+		return productService.getAllProducts();
 	}
 	
 	

@@ -15,11 +15,11 @@ import com.example.exweb.service.ProductService;
 public class ProductController {
 	private final ProductService productService;
 	
-	public ProductController(ProductService producutService) {
-		this.productService = producutService;
+	public ProductController(ProductService productService) {
+		this.productService = productService;
 		
-		
-	}
+		  }
+	
 	
 	@GetMapping
 	public List<Product> getAllProducts(){
