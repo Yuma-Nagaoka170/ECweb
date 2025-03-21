@@ -1,5 +1,7 @@
 package com.example.exweb.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,6 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -20,22 +25,47 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+            // 🔹 CORS設定を適用
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            
+            // 🔹 CSRFを無効化（API利用時に問題がある場合、一時的に無効化）
+            .csrf(csrf -> csrf.disable())
+            
+            // 🔹 認可設定
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/products", "/static/**", "/images/**", "/login").permitAll() // ホームページ、商品ページ、静的リソース、ログインページは誰でもアクセス可能
-                .requestMatchers("/api/products/**").permitAll() // REST APIも許可
-                .anyRequest().authenticated() // その他のページは認証が必要
+                .requestMatchers("/", "/products", "/static/**", "/images/**", "/login", "/api/products", "/api/products/[id]", "/api/cart", "/api/orders").permitAll()
+                .requestMatchers("/api/products/**").permitAll()
+                .requestMatchers("/api/orders/**").authenticated()
+                .anyRequest().authenticated()
             )
+
+            // 🔹 フォームログインの設定
             .formLogin(login -> login
-                .loginPage("/login") // ログインページの URL
-                .defaultSuccessUrl("/products", true) // ログイン成功後にリダイレクトする URL
-                .permitAll() // ログインページは誰でもアクセス可能
+                .loginPage("/login")
+                .defaultSuccessUrl("/api/products", true)
+                .permitAll()
             )
+
+            // 🔹 ログアウト設定
             .logout(logout -> logout
-                .logoutUrl("/logout") // ログアウトの URL
-                .logoutSuccessUrl("/") // ログアウト成功後にリダイレクトする URL
-                .permitAll() // ログアウトページは誰でもアクセス可能
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .permitAll()
             );
 
-        return http.build(); // セキュリティ設定を適用
+        return http.build();
+    }
+
+    // 🔹 CORSの設定（CORSを適用する正しい方法）
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://frontend.example.com")); // フロントエンドのURL
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true); // クッキーの送信を許可
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }
