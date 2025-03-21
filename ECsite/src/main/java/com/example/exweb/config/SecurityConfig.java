@@ -33,7 +33,7 @@ public class SecurityConfig {
             
             // 🔹 認可設定
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/products", "/static/**", "/images/**", "/login", "/api/products", "/api/products/[id]", "/api/cart", "/api/orders").permitAll()
+                .requestMatchers("/", "/products", "/static/**", "/images/**", "/login").permitAll()
                 .requestMatchers("/api/products/**").permitAll()
                 .requestMatchers("/api/orders/**").authenticated()
                 .anyRequest().authenticated()
@@ -42,7 +42,7 @@ public class SecurityConfig {
             // 🔹 フォームログインの設定
             .formLogin(login -> login
                 .loginPage("/login")
-                .defaultSuccessUrl("/api/products", true)
+                .defaultSuccessUrl("/products", true)
                 .permitAll()
             )
 
