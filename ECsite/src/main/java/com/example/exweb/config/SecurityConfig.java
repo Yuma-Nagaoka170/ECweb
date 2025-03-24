@@ -4,8 +4,12 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -23,50 +27,47 @@ public class SecurityConfig {
     }
 
     @Bean
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService) {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return new ProviderManager(authProvider);
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            // 🔹 CORS設定を適用
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            
-            // 🔹 CSRFを無効化（API利用時に問題がある場合、一時的に無効化）
-            .csrf(csrf -> csrf.disable())
-            
-            // 🔹 認可設定
+        return http
+            .csrf(csrf -> csrf.disable())  // 🔹 CSRF無効化（API向け）
+            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 🔹 CORS設定
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/products", "/static/**", "/images/**", "/login").permitAll()
-                .requestMatchers("/api/products/**").permitAll()
+                .requestMatchers("/", "/products", "/static/**", "/images/**", "/api/auth/login").permitAll()
                 .requestMatchers("/api/orders/**").authenticated()
                 .anyRequest().authenticated()
             )
-
-            // 🔹 フォームログインの設定
-            .formLogin(login -> login
-                .loginPage("/login")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/products", true)
+            .formLogin(form -> form
+                .loginProcessingUrl("/api/auth/login")  // 🔹 ログインエンドポイント
                 .permitAll()
             )
-
-            // 🔹 ログアウト設定
             .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
-                .permitAll()
-            );
-
-        return http.build();
+                .logoutUrl("/api/auth/logout")  // 🔹 ログアウトエンドポイント
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    response.setStatus(200);
+                    response.getWriter().write("{\"message\": \"ログアウト成功\"}");
+                    response.getWriter().flush();
+                })
+            )
+            .build();
     }
 
-    // 🔹 CORSの設定（CORSを適用する正しい方法）
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:8080"));  // フロントエンドのURLに合わせる
+        config.setAllowedOrigins(List.of("http://localhost:8080")); // フロントエンドのURL
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // クッキーの送信を許可
+        config.setAllowCredentials(true);
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
     }
