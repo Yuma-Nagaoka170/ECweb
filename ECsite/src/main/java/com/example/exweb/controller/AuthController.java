@@ -22,7 +22,7 @@ public class AuthController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request){
-		User user = userService.authenticate(request.getEmail(), request.getPassword());
+		User user = userService.authenticate(request.getEmail(), request.getPassword()).orElse(null);
 		if (user == null) {
 			return ResponseEntity.status(401).build();
 		}

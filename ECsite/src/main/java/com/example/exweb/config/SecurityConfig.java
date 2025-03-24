@@ -42,6 +42,8 @@ public class SecurityConfig {
             // 🔹 フォームログインの設定
             .formLogin(login -> login
                 .loginPage("/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
                 .defaultSuccessUrl("/products", true)
                 .permitAll()
             )
@@ -61,7 +63,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://frontend.example.com")); // フロントエンドのURL
+        config.setAllowedOrigins(List.of("http://localhost:8080"));  // フロントエンドのURLに合わせる
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true); // クッキーの送信を許可
