@@ -14,20 +14,20 @@ import com.example.exweb.service.UserService;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-	private final UserService userService;
-	
-	public AuthController(UserService userService) {
-		this.userService = userService;
-	}
-	
-	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request){
-		User user = userService.authenticate(request.getEmail(), request.getPassword()).orElse(null);
-		if (user == null) {
-			return ResponseEntity.status(401).build();
-		}
-		
-		return ResponseEntity.ok(new LoginResponse("dummy-token"));
-	}
+    private final UserService userService;
 
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        User user = userService.authenticate(request.getEmail(), request.getPassword()).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        return ResponseEntity.ok(new LoginResponse("dummy-token"));
+    }
 }
+
