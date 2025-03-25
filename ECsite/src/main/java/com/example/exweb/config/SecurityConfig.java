@@ -35,7 +35,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) // CSRFを完全に無効化（API向け）
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/products", "/static/**", "/images/**", "api/auth/login").permitAll()
+                .requestMatchers("/", "/products", "/static/**", "/images/**", "/api/auth/login", "/img/**", "/favicon.ico", "/static/img/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll() // 商品取得APIは許可
                 .requestMatchers("/api/orders/**").authenticated()
