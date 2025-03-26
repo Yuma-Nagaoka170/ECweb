@@ -18,9 +18,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 public class SecurityConfig {
 
+    private static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return PASSWORD_ENCODER;
     }
 
     @Bean
@@ -32,14 +34,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // CSRFを完全に無効化（API向け）
+            .csrf(csrf -> csrf.disable()) // API用にCSRFを無効化
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-            		.requestMatchers("/", "/products", "/static/**", "/images/**", "/api/auth/login", "/img/**", "/favicon.ico", "/static/img/**","/login.html","/js/**").permitAll()
-                    .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll() // 商品取得APIは許可
-                .requestMatchers("/api/orders/**").authenticated()
-                .anyRequest().authenticated()
+                .requestMatchers("/", "/products", "/favicon.ico").permitAll()
+                .requestMatchers("/css/**", "/js/**", "/images/**", "/img/**").permitAll() // 静的リソースを許可
+                .requestMatchers("/api/auth/**").permitAll() // 認証APIは許可
+                .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll() // 商品取得API
+                .requestMatchers("/api/orders/**").authenticated() // 注文APIは認証必須
+                .anyRequest().authenticated() // それ以外は認証必須
             );
 
         return http.build();
