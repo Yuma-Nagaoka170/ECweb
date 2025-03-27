@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ECサイト</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="index.html">ECサイト</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="ナビゲーションメニューを切り替え">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -37,7 +37,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-					<img src="/static/img/image01.jpg" alt="Product1">
+                    <img src="/static/img/image01.jpg" alt="商品1" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">商品1</h5>
                         <p class="card-text">¥2,500</p>
@@ -47,7 +47,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-					<img src="/static/img/image02.jpg" alt="Product2">
+                    <img src="/static/img/image02.jpg" alt="商品2" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">商品2</h5>
                         <p class="card-text">¥3,000</p>
@@ -57,7 +57,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-					<img src="/static/img/image03.jpg" alt="Product3">
+                    <img src="/static/img/image03.jpg" alt="商品3" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">商品3</h5>
                         <p class="card-text">¥4,000</p>
@@ -72,24 +72,7 @@
         <p>&copy; 2025 ECサイト</p>
     </footer>
 
-    <script>
-        function checkLogin() {
-            const user = localStorage.getItem('user');
-            if (user) {
-                document.getElementById('loginNav').classList.add('d-none');
-                document.getElementById('registerNav').classList.add('d-none');
-                document.getElementById('logoutNav').classList.remove('d-none');
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('user');
-            alert('ログアウトしました');
-            location.reload();
-        }
-
-        checkLogin();
-    </script>
+    <script src="js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -12,7 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -20,10 +19,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+  
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    public SecurityConfig() {
+        
     }
 
     @Bean
@@ -45,6 +44,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/products", "/favicon.ico").permitAll() // ホーム・製品ページ許可
                 .requestMatchers("/login").permitAll()
+                .requestMatchers("/home").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**", "/img/**").permitAll() // 静的リソース許可
                 .requestMatchers("/api/auth/**").permitAll() // 認証API許可
                 .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll() // 商品取得API許可
@@ -56,8 +56,8 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/home", true) // 認証成功時のリダイレクト先
                 .failureUrl("/login?error=true") // 認証失敗時のリダイレクト先
                 .permitAll() // 認証なしでアクセス可能
-            )
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // JWT フィルターを追加
+            );
+         
 
         return http.build();
     }
