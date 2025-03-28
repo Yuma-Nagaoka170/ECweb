@@ -7,6 +7,16 @@ VALUES
 -- 商品データ（画像のURLも追加）
 INSERT INTO products (name, price, description, image_url) 
 VALUES 
-('Tシャツ', 2500, 'シンプルな白いTシャツ', 'images/image1.jpg'),
-('スニーカー', 8000, '快適な履き心地のスニーカー', 'images/image2.png'),
-('リュック', 4500, '通勤・通学に最適なリュック', 'images/image3.png');
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('スニーカー', 8000, '快適な履き心地のスニーカー', 'img/image02.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('リュック', 4500, '通勤・通学に最適なリュック', 'img/image03.jpg');

@@ -1,4 +1,4 @@
-package com.example.exweb.model;
+package com.example.exweb.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,23 +10,26 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Data
 @Table(name = "products")
+@Data
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(name = "id")
+	private Integer id;
 	
-	@Column(nullable = false)
+	@Column(name = "name")
 	private String name;
 	
-	@Column(nullable = false)
-	private int price;
+	@Column(name = "price")
+	private Integer price;
 	
-	@Column(nullable = false)
+	@Column(name = "description")
 	private String description;
 	
-	@Column(nullable = false)
+	@Column(name = "image_url")
 	private String imageUrl;
+	
+	
 
 }
