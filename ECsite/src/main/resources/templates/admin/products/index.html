@@ -62,7 +62,7 @@
                                         <td th:text="${product.getId()}"></td>
                                         <td th:text="${product.getName()}"></td>
                                         <td th:text="${product.getPrice()}"></td>
-                                        <td><a href="#">詳細</a></td>                                                                                
+										<td><a th:href="@{/admin/products/{id}(id=${product.id})}">詳細</a></td>                                                                               
                                     </tr>                                      
                                 </tbody>
                             </table>

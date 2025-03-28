@@ -51,17 +51,21 @@ footer{
 	opacity: 0.8;
 }
 
-.moattravel-page-link{
+.exweb-page-link{
 	color: #5196a6;
 }
 
-.moattravel-page-link:hover{
+.exweb-page-link:hover{
 	color: #407784;
 }
 
-.moattravel-active{
+.exweb-active{
 	background-color: #5196a6 !important;
 	border-color: #5196a6 !important;
+}
+
+.exweb-pre-wrap{
+	white-space: pre-wrap;
 }
 
 @media screen and (min-width: 1400px){

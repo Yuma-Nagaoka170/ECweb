@@ -48,4 +48,6 @@ public String show(@PathVariable(name = "id") Integer id, Model model) {
 	
 	return "admin/products/show";
 }
+
+
 }
