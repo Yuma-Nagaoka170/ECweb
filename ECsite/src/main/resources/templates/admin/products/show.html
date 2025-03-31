@@ -52,8 +52,11 @@
 								<!--img th:if="${product.image_url}" th:src="@{/img/image}" class="w-100" alt="商品画像">
                                 <img th:unless="${product.image_url}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
                             </div-->
-							    <img th:if="${product.image_url}" th:src="@{${product.image_url}}" class="w-100" alt="商品画像">
+							    <!--img th:if="${product.image_url}" th:src="@{${product.image_url}}" class="w-100" alt="商品画像"-->
+								<img th:if="${product.image_url}" th:src="@{/img/{filename}(filename=${product.image_url})}" class="w-100" alt="商品画像">
 							    <img th:unless="${product.image_url}" th:src="@{/images/noImage.png}" class="w-100" alt="NO IMAGE">
+								<p th:text="${product.image_url}"></p>
+
 							</div>
    
                             
