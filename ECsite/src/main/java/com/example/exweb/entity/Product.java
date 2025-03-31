@@ -29,6 +29,11 @@ public class Product {
 	
 	@Column(name = "image_url")
 	private String image_url;
+
+	public void setImageName(String hashedImageName) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	}
 	
 	
 
