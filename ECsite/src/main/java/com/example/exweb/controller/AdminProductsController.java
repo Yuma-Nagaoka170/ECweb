@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.exweb.entity.Product;
+import com.example.exweb.form.ProductEditForm;
 import com.example.exweb.form.ProductRegisterForm;
 import com.example.exweb.repository.ProductsRepository;
 import com.example.exweb.service.ProductService;
@@ -65,16 +66,43 @@ public String register(Model model) {
 	}
 
 @PostMapping("/create")
-public String create(@ModelAttribute @Validated ProductRegisterForm houseRegisterForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+public String create(@ModelAttribute @Validated ProductRegisterForm productRegisterForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 	if (bindingResult.hasErrors()) {
-		return "admin/houses/register";
+		return "admin/products/register";
 	}
 	
-	productService.create(houseRegisterForm);
-	redirectAttributes.addFlashAttribute("successMessage","民宿を登録しました。");
+	productService.create(productRegisterForm);
+	redirectAttributes.addFlashAttribute("successMessage","商品を登録しました。");
 	
-	return "redirect:/admin/houses";
+	return "redirect:/admin/products";
 }
+
+@GetMapping("/{id}/edit")
+
+public String edit(@PathVariable(name = "id") Integer id, Model model) {
+	Product product = productsRepository.getReferenceById(id);
+	String imageName = product.getImageName();
+	
+	ProductEditForm productEditForm = new ProductEditForm(product.getId(), product.getName(), null, product.getDescription(), product.getPrice());
+	
+	model.addAttribute("imageName", imageName);
+	model.addAttribute("productEditForm",productEditForm);
+	
+	return "admin/products/edit";
+}
+
+@PostMapping("/{id}/update")
+public String update(@ModelAttribute @Validated ProductEditForm productEditForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	if (bindingResult.hasErrors()) {
+		return "admin/products/edit";
+	}
+	
+	productService.update(productEditForm);
+	redirectAttributes.addFlashAttribute("successMessage", "商品を編集しました。");
+	
+	return "redirect:/admin/products";
+}
+
 
 
 }

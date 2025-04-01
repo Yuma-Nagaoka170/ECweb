@@ -53,7 +53,25 @@
                                         <td th:text="${product.getId()}"></td>
                                         <td th:text="${product.getName()}"></td>
                                         <td th:text="${product.getPrice()}"></td>
-										<td><a th:href="@{/admin/products/{id}(id=${product.id})}">詳細</a></td>                                                                               
+										<td><a th:href="@{/admin/products/{id}(id=${product.id})}">詳細</a></td>
+										<td><a href="#" class="exweb-link-danger" data-bs-toggle="modal" th:data-bs-target="${'#deleteHouseModal' + product.getId()}">削除</a></td>  
+										
+										<!-- 削除用モーダル -->
+									    <div class="modal fade" th:id="${'deleteProductModal' + product.getId()}" tabindex="-1" th:aria-labelledby="${'deleteProductModalLabel' + product.getId()}">
+										   <div class="modal-dialog">
+										      <div class="modal-content">
+										         <div class="modal-header">
+										           <h5 class="modal-title" th:id="${'deleteProductModalLabel' + product.getId()}" th:text="${product.getName() + 'を削除してもよろしいですか？'}"></h5>
+										           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+										         </div>
+										          <div class="modal-footer">
+										            <form method="post"th:action="@{/admin/products/__${product.getId()}__/delete}">
+										               <button type="submit" class="btn exweb-btn-danger text-white shadow-sm">削除</button>
+										             </form>
+										           </div>
+										        </div>
+										      </div>
+										    </div>                                  
                                     </tr>                                      
                                 </tbody>
                             </table>

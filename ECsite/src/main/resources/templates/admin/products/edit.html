@@ -1,11 +1,11 @@
-<!DOCTYPE ht<ml>
+<!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
     <head>
         <div th:replace="~{fragment :: meta}"></div>   
              
         <div th:replace="~{fragment :: styles}"></div>
         
-        <title>商品登録</title>       
+        <title>商品情報編集</title>       
     </head>
     <body>
         <div class="exweb-wrapper">
@@ -18,14 +18,17 @@
                         <div class="col-xl-5 col-lg-6 col-md-8">
                             <nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                                 <ol class="breadcrumb mb-0"> 
-                                    <li class="breadcrumb-item"><a th:href="@{/admin/products}">商品一覧</a></li>                                                           
-                                    <li class="breadcrumb-item active" aria-current="page">商品登録</li>
+                                    <li class="breadcrumb-item"><a th:href="@{/admin/products}">商品一覧</a></li>  
+                                    <li class="breadcrumb-item"><a th:href="@{/admin/products/__${productEditForm.getId()}__}">商品詳細</a></li>                                                           
+                                    <li class="breadcrumb-item active" aria-current="page">商品情報編集</li>
                                 </ol>
                             </nav> 
                             
-                            <h1 class="mb-4 text-center">商品登録</h1>         
+                            <h1 class="mb-4 text-center">商品情報編集</h1>         
                             
-                            <form method="post" th:action="@{/admin/products/create}" th:object="${productRegisterForm}" enctype="multipart/form-data">                                                            
+                            <form method="post" th:action="@{/admin/products/__${productEditForm.getId()}__/update}" th:object="${productEditForm}" enctype="multipart/form-data">   
+                                <input type="hidden" th:field="*{id}">
+                                                                                         
                                 <div class="form-group row mb-3">
                                     <div class="col-md-4">
                                         <label for="name" class="col-form-label text-md-left fw-bold">商品名</label>
@@ -47,7 +50,8 @@
                                 </div>   
                                 
                                 <!-- 選択された画像の表示場所 -->
-                                <div class="row" id="imagePreview"></div>                                 
+                                <div th:if="${imageName}" class="row" id="imagePreview"><img th:src="@{/storage/__${imageName}__}" class="mb-3"></div>
+                                <div th:unless="${imageName}" class="row" id="imagePreview"></div>                                 
                                 
                                 <div class="form-group row mb-3">
                                     <div class="col-md-4">
@@ -67,18 +71,17 @@
                                         <div th:if="${#fields.hasErrors('price')}" class="text-danger small mb-2" th:errors="*{price}"></div>
                                         <input type="number" class="form-control" th:field="*{price}">                                
                                     </div>                                    
-                                </div>
-                                
+                                </div> 
                                 
                                                                                                                         
                                 
                                 <div class="form-group d-flex justify-content-center my-4">
-                                    <button type="submit" class="btn text-white shadow-sm w-50 exweb-btn">登録</button>
+                                    <button type="submit" class="btn text-white shadow-sm w-50 exweb-btn">更新</button>
                                 </div>
                             </form>                                                                         
                         </div>
                     </div>
-                </div>                
+                </div>                 
             </main>
             
             <!-- フッター -->

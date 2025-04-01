@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.exweb.entity.Product;
+import com.example.exweb.form.ProductEditForm;
 import com.example.exweb.form.ProductRegisterForm;
 import com.example.exweb.repository.ProductsRepository;
 
@@ -24,23 +25,49 @@ public class ProductService {
 	
 	@Transactional
 	public void create(ProductRegisterForm productRegisterForm) {
-		Product product = new Product();
-		MultipartFile imageFile = productRegisterForm.getImageFile();
+	    Product product = new Product();
+	    MultipartFile imageFile = productRegisterForm.getImageFile();
+	    
+	    if (!imageFile.isEmpty()) {
+	        String imageName = imageFile.getOriginalFilename();
+	        String hashedImageName = generateNewFileName(imageName);
+	        Path filePath = Paths.get("src/main/resources/static/img/" + hashedImageName);
+	        copyImageFile(imageFile, filePath);
+	        
+	        // ここで image_url をセット
+	        product.setImageName("/img/" + hashedImageName);
+	    } else {
+	        // 画像がアップロードされていない場合はデフォルト画像をセット
+	        product.setImageName("/img/noImage.png");
+	    }
+
+	    product.setName(productRegisterForm.getName());
+	    product.setDescription(productRegisterForm.getDescription());
+	    product.setPrice(productRegisterForm.getPrice());
+
+	    productsRepository.save(product);
+	}
+	
+	@Transactional
+	public void update(ProductEditForm productEditForm) {
+		Product product = productsRepository.getReferenceById(productEditForm.getId());
+		MultipartFile imageFile = productEditForm.getImageFile();
 		
-		if(!imageFile.isEmpty()) {
+		if (!imageFile.isEmpty()) {
 			String imageName = imageFile.getOriginalFilename();
 			String hashedImageName = generateNewFileName(imageName);
 			Path filePath = Paths.get("src/main/resources/static/img/" + hashedImageName);
-			copyImageFile(imageFile,filePath);
+			copyImageFile(imageFile, filePath);
 			product.setImageName(hashedImageName);
 		}
 		
-		product.setName(productRegisterForm.getName());
-		product.setDescription(productRegisterForm.getDescription());
-		product.setPrice(productRegisterForm.getPrice());
+		product.setName(productEditForm.getName());
+		product.setDescription(productEditForm.getDescription());
+		product.setPrice(productEditForm.getPrice());
 		
 		productsRepository.save(product);
 	}
+
 	
 	public String generateNewFileName(String fileName) {
 		String[] fileNames = fileName.split("\\.");

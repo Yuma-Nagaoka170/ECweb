@@ -5,16 +5,16 @@ VALUES
 ('alice@example.com', '$2a$10$Z1rD1Xe2DOkkk', FALSE, 'Alice', 'Osaka, Japan', '080-5678-1234', 'female');
 
 -- 商品データ（画像のURLも追加）
-INSERT INTO products (name, price, description, image_url) 
+INSERT INTO products (name, price, description, image_name) 
 VALUES 
 ('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
 ('スニーカー', 8000, '快適な履き心地のスニーカー', 'img/image02.jpg'),
-('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
-('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
-('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
-('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
-('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
-('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image04.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image05.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image06.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image07.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image08.jpg'),
+('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image09.jpg'),
 ('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
 ('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),
 ('Tシャツ', 2500, 'シンプルな白いTシャツ', 'img/image01.jpg'),

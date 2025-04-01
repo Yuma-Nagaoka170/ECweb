@@ -27,10 +27,15 @@ public class Product {
 	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "image_url")
-	private String image_url;
+	@Column(name = "image_name")
+	private String imageName;
 
 	public void setImageName(String hashedImageName) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	}
+
+	public void setImageUrl(String string) {
 		// TODO 自動生成されたメソッド・スタブ
 		
 	}
