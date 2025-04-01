@@ -68,8 +68,25 @@ footer{
 	white-space: pre-wrap;
 }
 
+.exweb-link-danger{
+	color: #f2594b;
+}
+
+.exweb-link-danger:hover{
+	color:#a63c3c;
+}
+
+.exweb-btn-danger{
+	background-color: #f2594b !important;
+	transition: 0.1s;
+}
+
+.exweb-btn-danger:hover{
+	opacity: 0.8;
+}
+
 @media screen and (min-width: 1400px){
-	.moattravel-container{
+	.exweb-container{
 		max-width: 1200px;
 	}
 }

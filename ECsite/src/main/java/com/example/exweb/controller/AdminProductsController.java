@@ -103,6 +103,15 @@ public String update(@ModelAttribute @Validated ProductEditForm productEditForm,
 	return "redirect:/admin/products";
 }
 
+@PostMapping("/{id}/delete")
+public String delete (@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
+	productsRepository.deleteById(id);
+	
+	redirectAttributes.addFlashAttribute("successMessage","商品を削除しました。");
+	
+	return "redirect:/admin/products";
+	
+}
 
 
 }
