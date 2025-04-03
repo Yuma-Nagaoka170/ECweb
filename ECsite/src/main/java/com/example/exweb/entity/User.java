@@ -26,6 +26,9 @@ public class User {
 	@Column(name = "address")
 	private String address;
 	
+	@Column(name = "email")
+	private String email;
+	
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	
@@ -37,5 +40,15 @@ public class User {
 	
 	@Column(name = "updated_at", insertable = false, updatable = false)
 	private Timestamp updatedAt;
+
+	public boolean getEnabled() {
+		// TODO 自動生成されたメソッド・スタブ
+		return false;
+	}
+
+	public User getRole() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 
 }
